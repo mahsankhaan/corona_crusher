@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" type="text/css" href="public/css/style.css"/>
+  <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
+
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+</head>
+<script>
+  const roomName = "<%= roomName %>"
+// document.getElementById("roomCodes").innerText=`your room code is : ${roomName}`;
+
+function run(){ 
+  
+ document.getElementById("invitelink").style.display="block";
+document.getElementById("linkText").innerText=`http://coronacrusher.mybluemix.net/${roomName}`
+}
+function execCopy(){
+  
+  const el = document.createElement('textarea');
+  el.value = `http://coronacrusher.mybluemix.net/${roomName}`;
+  el.setAttribute('readonly', '');
+  el.style.position = 'absolute';
+  el.style.left = '-9999px';
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
+  console.log('done');
+}
+</script>
+<body onload="run();">
+
+<body>
+  <article>
+    <div id="myModal" class="modal" style="display: none;">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="close">&times;</span>
+          <h2>Game End</h2>
+        </div>
+        <div class="modal-body">
+          <p id="winmodal"></p>
+          <p>-------------------------</p>
+        </div>
+        
+      </div>
+    
+    </div>
+    
+
+    
+      <div id="board" class="container grid-container">
+        <div id="74" name="hazard" class="box blue-left blue-top dash-right dash-bottom hazard-icon" style="background-image:url(public/img/safety-icon-sneeze.png);"></div>
+        <div id="75" name="fine" class="box blue-top dash-right"> 75 </div>
+        <div id="76" name="hazard" class="box blue-top dash-right hazard-icon" style="background-image:url(public/img/hazard-icon-shaking-hands.png);"> </div>
+        <div id="77" name="fine" class="box blue-top dash-right"> 77 </div>
+        <div id="78" name="fine" class="box blue-top dash-right"> 78 </div>
+        <div id="79" name="purple-city" class="box purple-city blue-top dash-right"> <div id=pan style="display: none;">off</div></div>
+        <div id="80" name="fine" class="box blue-top dash-right"> 80</div>
+        <div id="81" name="fine" class="box blue-top dash-right"> 81 </div>
+        <div id="82" name="hazard" class="box blue-top dash-right hazard-icon" style="background-image:url(public/img/hazard-icon-crowds.png);"> </div>
+        <div id="83" name="fine" class="box blue-top dash-right"> 83 </div>
+        <div id="84" name="hazard" class="box blue-top blue-right dash-bottom hazard-icon" style="background-image:url(public/img/hazard-icon-touching-face.png);"></div>
+        <div id="73" name="fine" class="box blue-left dash-bottom"> 73</div>
+        <div id="42" name="red-city" class="box red-city blue-left blue-top dash-right dash-bottom"><div id=pan style="display: none;">off</div></div>
+        <div id="43" name="fine" class="box blue-top dash-right"> 43 </div>
+        <div id="44" name="fine" class="box blue-top dash-right"> 44</div>
+        <div id="45" name="hazard" class="box blue-top dash-right hazard-icon" style="background-image:url(public/img/hazard-icon-touching-face.png);"> </div>
+        <div id="46" name="fine" class="box blue-top dash-right"> 46</div>
+        <div id="47" name="hazard" class="box blue-top dash-right hazard-icon" style="background-image:url(public/img/hazard-icon-crowds.png);"> </div>
+        <div id="48" name="fine" class="box blue-top dash-right"> 48 </div>
+        <div id="49" name="fine" class="box blue-top dash-right"> 49 </div>
+        <div id="50" name="safety" class="box blue-top blue-right dash-bottom safety-icon" style="background-image:url(public/img/safety-icon-wash.png);"></div>
+        <div id="85" name="fine" class="box blue-right dash-bottom"> 85</div>
+        <div id="72" name="hazard" class="box blue-left dash-bottom hazard-icon" style="background-image:url(public/img/hazard-icon-shaking-hands.png);"></div>
+        <div id="41" name="fine" class="box blue-left dash-bottom"> 41 </div>
+        <div id="18" name="safety" class="box blue-left blue-top dash-bottom dash-right safety-icon" style="background-image:url(public/img/safety-icon-home.png);"> </div>
+        <div id="19" name="fine" class="box blue-top dash-right"> 19</div>
+        <div id="20" name="fine" class="box blue-top dash-right"> 20 </div>
+        <div id="21" name="orange-city" class="box orange-city blue-top dash-right"><div id=pan style="display: none;">off</div></div>
+        <div id="22" name="fine" class="box blue-top dash-right"> 22 </div>
+        <div id="23" name="fine" class="box blue-top dash-right"> 23 </div>
+        <div id="24" name="safety" class="box blue-top blue-right dash-bottom safety-icon" style="background-image:url(public/img/safety-icon-sneeze.png);"> </div>
+        <div id="51" name="red-city" class="box red-city blue-right dash-bottom"><div id=pan style="display: none;">off</div></div>
+        <div id="86" name="fine" class="box blue-right dash-bottom"> 86</div>
+        <div id="71" name="fine" class="box blue-left dash-bottom"> 71</div>
+        <div id="40" name="safety" class="box blue-left dash-bottom safety-icon" style="background-image:url(public/img/safety-icon-wash.png);"> </div>
+        <div id="17" name="fine" class="box blue-left dash-bottom"> 17 </div>
+        <div id="2" name="hazard" class="box blue-left blue-top dash-bottom dash-right hazard-icon" style="background-image:url(public/img/hazard-icon-crowds.png);"></div>
+        <div id="3" name="fine" class="box blue-top dash-right"> 3 </div>
+        <div id="4" name="safety" class="box blue-top dash-right safety-icon" style="background-image:url(public/img/safety-icon-mask.png);"></div>
+        <div id="5" name="fine" class="box blue-top dash-right"> 5 </div>
+        <div id="6" name="hazard" class="box blue-top blue-right dash-bottom hazard-icon" style="background-image:url(public/img/hazard-icon-touching-face.png);"> </div>
+        <div id="25" name="fine" class="box blue-right dash-bottom"> 25 </div>
+        <div id="52" name="fine" class="box blue-right dash-bottom"> 52</div>
+        <div id="87" name="hazard" class="box blue-right dash-bottom hazard-icon" style="background-image:url(public/img/hazard-icon-shaking-hands.png);"> </div>
+        <div id="70" name="hazard" class="box blue-left dash-bottom hazard-icon" style="background-image:url(public/img/hazard-icon-touching-face.png);"> </div>
+        <div id="39" name="fine" class="box blue-left dash-bottom"> 39 </div>
+        <div id="16" name="hazard" class="box blue-left dash-bottom hazard-icon" style="background-image:url(public/img/hazard-icon-shaking-hands.png);">  </div>
+        <div id="1" name="fine" class="box blue-left dash-bottom"> 1</div>
+        <div id="orangecity" name="city" class="box blue-left blue-right blue-top blue-bottom" style="background-image:url(public/img/orange-city-front.png); background-size: 100% 100%; background-repeat: no-repeat; background-position: center;"><div id=pan style="display: none;">off</div></div>
+        <div id="redcity" name="city" class="box blue-top blue-bottom blue-right" style="background-image:url(public/img/red-city-front.png); background-size: 100% 100%; background-repeat: no-repeat; background-position: center;"></div>
+        <div id="purplecity" name="city" class="box blue-top blue-bottom blue-right" style="background-image:url(public/img/purple-city-front.png); background-size: 100% 100%; background-repeat: no-repeat; background-position: center;"></div>
+        <div id="7" name="fine" class="box blue-right dash-bottom"> 7 </div>
+        <div id="26" name="hazard" class="box blue-right dash-bottom hazard-icon" style="background-image:url(public/img/hazard-icon-crowds.png);"> </div>
+        <div id="53" name="safety" class="box blue-right dash-bottom safety-icon" style="background-image:url(public/img/safety-icon-mask.png);"> </div>
+        <div id="88" name="fine" class="box blue-right dash-bottom"> 88</div>
+        <div id="69" name="fine" class="box blue-left dash-bottom"> 69</div>
+        <div id="38" name="safety" class="box blue-left dash-bottom safety-icon" style="background-image:url(public/img/safety-icon-mask.png);"> </div>
+        <div id="15" name="fine" class="box blue-left dash-bottom"> 15 </div>
+        <div id="start" name="start" class="startend grid-item-startend blue-left blue-bottom blue-right" style="background-image:url(public/img/start-direction-arrow.png); background-size: 40% 100%; background-repeat: no-repeat;"> Start </div>
+        <div id="8" name="fine" class="box blue-right dash-bottom"> 8 </div>
+        <div id="27" name="fine" class="box blue-right dash-bottom"> 27</div>
+        <div id="54" name="fine" class="box blue-right dash-bottom"> 54 </div>
+        <div id="89" name="purple-city" class="box purple-city blue-right dash-bottom"> <div id=pan style="display: none;">off</div></div>
+        <div id="68" name="purple-city" class="box purple-city blue-left dash-bottom"> <div id=pan style="display: none;">off</div> </div>
+        <div id="37" name="fine" class="box blue-left dash-bottom"> 37</div>
+        <div id="14" name="orange-city" class="box orange-city blue-bottom blue-left dash-right"><div id=pan style="display: none;">off</div></div>
+        <div id="13" name="fine" class="box blue-bottom dash-right"> 13</div>
+        <div id="12" name="safety" class="box blue-bottom dash-right safety-icon" style="background-image:url(public/img/safety-icon-wash.png);">  </div>
+        <div id="11" name="fine" class="box blue-bottom dash-right"> 11 </div>
+        <div id="10" name="hazard" class="box blue-bottom dash-right hazard-icon" style="background-image:url(public/img/hazard-icon-shaking-hands.png);"> </div>
+        <div id="9" name="fine" class="box blue-right blue-bottom"> 9 </div>
+        <div id="28" name="fine" class="box blue-right dash-bottom"> 28</div>
+        <div id="55" name="hazard" class="box blue-right dash-bottom hazard-icon" style="background-image:url(public/img/hazard-icon-touching-face.png);">  </div>
+        <div id="90" name="fine" class="box blue-right dash-bottom"> 90 </div>
+        <div id="67" name="fine" class="box blue-left dash-bottom"> 67 </div>
+        <div id="36" name="hazard" class="box blue-bottom blue-left dash-right hazard-icon" style="background-image:url(public/img/hazard-icon-touching-face.png);"> </div>
+        <div id="35" name="fine" class="box blue-bottom dash-right"> 35</div>
+        <div id="34" name="fine" class="box blue-bottom dash-right">34</div>
+        <div id="33" name="hazard" class="box blue-bottom dash-right hazard-icon" style="background-image:url(public/img/hazard-icon-crowds.png);">  </div>
+        <div id="32" name="fine" class="box blue-bottom dash-right"> 32 </div>
+        <div id="31" name="fine" class="box blue-bottom dash-right"> 31</div>
+        <div id="30" name="fine" class="box blue-bottom dash-right"> 30 </div>
+        <div id="29" name="orange-city" class="box orange-city blue-right blue-bottom"> <div id=pan style="display: none;">off</div></div>
+        <div id="56" name="fine" class="box blue-right dash-bottom"> 56 </div>
+        <div id="91" name="hazard" class="box blue-right dash-bottom hazard-icon" style="background-image:url(public/img/hazard-icon-crowds.png);">  </div>
+        <div id="66" name="hazard" class="box blue-bottom blue-left hazard-icon box blue-bottom dash-right" style="background-image:url(public/img/hazard-icon-shaking-hands.png);">  </div>
+        <div id="65" name="fine" class="box blue-bottom dash-right "> 65</div>
+        <div id="64" name="safety" class="box blue-bottom dash-right safety-icon" style="background-image:url(public/img/safety-icon-home.png);"> </div>
+        <div id="63" name="fine" class="box blue-bottom dash-right"> 63</div>
+        <div id="62" name="fine" class="box blue-bottom dash-right"> 62 </div>
+        <div id="61" name="red-city" class="box red-city blue-bottom dash-right"> <div id=pan style="display: none;">off</div> </div>
+        <div id="60" name="fine" class="box blue-bottom dash-right"> 60</div>
+        <div id="59" name="safety" class="box blue-bottom dash-right safety-icon" style="background-image:url(public/img/safety-icon-mask.png);">  </div>
+        <div id="58" name="fine" class="box blue-bottom dash-right"> 58</div>
+        <div id="57" name="hazard" class="box blue-right blue-bottom hazard-icon" style="background-image:url(public/img/hazard-icon-shaking-hands.png);">  </div>
+        <div id="92" name="fine" class="box blue-right dash-bottom"> 92 </div>
+        <div id="100" name="end" class="startend grid-item-startend blue-bottom blue-left dash-right"> End</div>
+        <div id="99" name="hazard" class="box blue-bottom dash-right hazard-icon" style="background-image:url(public/img/hazard-icon-touching-face.png);"> </div>
+        <div id="98" name="fine" class="box blue-bottom dash-right"> 98</div>
+        <div id="97" name="safety" class="box blue-bottom dash-right safety-icon" style="background-image:url(public/img/safety-icon-wash.png);"> </div>
+        <div id="96" name="fine" class="box blue-bottom dash-right"> 96 </div>
+        <div id="95" name="purple-city" class="box purple-city blue-bottom dash-right"> <div id=pan style="display: none;">off</div> </div>
+        <div id="94" name="fine" class="box blue-bottom dash-right"> 94</div>
+        <div id="93" name="safety" class="box blue-right blue-bottom safety-icon" style="background-image:url(public/img/safety-icon-sneeze.png);">  </div>
+      </div>
+
+
+      <!-- 1st player-->
+        <div id="p00" class="player0 playerIcon" style="display:none" >
+        <div id='current_position' style="display:none">0</div>
+        <div id='health' style="display: none;"> healthy </div>
+        <div id='score' style="display: none;"> 0</div>
+        <div id='turn' style="display: none;"> true</div>
+        <div id='available' style="display:none">yes</div>
+        </div>
+
+
+        <div id="p01" class="player0 playerIcon" style="display:none">
+          <div id='current_position' style="display:none">0</div>
+          <div id='health' style="display: none;"> healthy </div>
+          <div id='score' style="display: none;"> 0</div>
+          <div id='turn' style="display: none;"> true</div>
+          <div id='available' style="display:none">no</div>
+        </div>
+
+        <div id="p02" class="player0 playerIcon" style="display:none">
+          <div id='current_position' style="display:none">0</div>
+          <div id='health' style="display: none;"> healthy </div>
+          <div id='score' style="display: none;"> 0</div>
+          <div id='turn' style="display: none;"> true</div>
+          <div id='available' style="display:none">no</div>
+        </div>
+        <!-- 2nd player
+
+        <div id="p03" class="player0 playerIcon" style="display:none">
+          <div id='current_position' style="display:none"> 0</div>
+          <div id='health' style="display: none;"> healthy </div>
+          <div id='score' style="display: none;"> 0</div>
+          <div id='turn' style="display: none;"> true</div>
+          <div id='available' style="display:none">no</div>
+        </div>
+
+-->
+        <!-- 2nd player-->
+        
+        <div id="p10" class="player1 playerIcon" style="display:none" >
+          <div id='current_position' style="display:none">0</div>
+          <div id='health' style="display: none;"> healthy </div>
+          <div id='score' style="display: none;"> 0</div>
+          <div id='turn' style="display: none;"> true</div>
+          <div id='available' style="display:none">yes</div>
+        </div>
+
+
+        <div id="p11" class="player1 playerIcon" style="display:none">
+          <div id='current_position' style="display:none">0</div>
+          <div id='health' style="display: none;"> healthy </div>
+          <div id='score' style="display: none;"> 0</div>
+          <div id='turn' style="display: none;"> true</div>
+          <div id='available' style="display:none">no</div>
+        </div>
+
+      <div id="p12" class="player1 playerIcon" style="display:none">
+        <div id='current_position' style="display:none">0</div>
+        <div id='health' style="display: none;"> healthy </div>
+        <div id='score' style="display: none;"> 0</div>
+        <div id='turn' style="display: none;"> true</div>
+       <div id='available' style="display:none">no</div>
+      </div>
+        <!-- 
+      <div id="p13" class="player1 playerIcon" style="display:none">
+        <div id='current_position' style="display:none">0</div>
+        <div id='health' style="display: none;"> healthy </div>
+        <div id='score' style="display: none;"> 0</div>
+        <div id='turn' style="display: none;"> true</div>
+        <div id='available' style="display:none">no</div>
+      </div>
+-->
+      <div id="p20" class="player2 playerIcon" style="display:none">
+        <div id='current_position' style="display:none">0</div>
+        <div id='health' style="display: none;"> healthy </div>
+        <div id='score' style="display: none;"> 0</div>
+        <div id='turn' style="display: none;"> true</div>
+        <div id='available' style="display:none">yes</div>
+      </div>
+
+      <div id="p21" class="player2 playerIcon" style="display:none">
+        <div id='current_position' style="display:none">0</div>
+        <div id='health' style="display: none;"> healthy </div>
+        <div id='score' style="display: none;"> 0</div>
+        <div id='turn' style="display: none;"> true</div>
+        <div id='available' style="display:none">no</div>
+      </div>
+
+
+      <div id="p22" class="player2 playerIcon" style="display:none">
+        <div id='current_position' style="display:none">0</div>
+        <div id='health' style="display: none;"> healthy </div>
+        <div id='score' style="display: none;"> 0</div>
+        <div id='turn' style="display: none;"> true</div>
+        <div id='available' style="display:none">no</div>
+      </div>
+
+      <!-- 
+
+      <div id="p23" class="player2 playerIcon" style="display:none">
+        <div id='current_position'>0</div>
+        <div id='health' style="display: none;"> healthy </div>
+        <div id='score' style="display: none;"> 0</div>
+        <div id='turn' style="display: none;"> true</div>
+        <div id='available'>no</div>
+      </div>
+
+-->
+      <!--3rd player-->
+
+
+      <div id="p30" class="player3 playerIcon" style="display:none" >
+        <div id='current_position' style="display:none">0</div>
+        <div id='health' style="display: none;"> healthy </div>
+        <div id='score' style="display: none;"> 0</div>
+        <div id='turn' style="display: none;"> true</div>
+        <div id='available' style="display:none">yes</div>
+      </div>
+
+      <div id="p31" class="player3 playerIcon" style="display:none">
+        <div id='current_position' style="display:none">0</div>
+        <div id='health' style="display: none;"> healthy </div>
+        <div id='score' style="display: none;"> 0</div>
+        <div id='turn' style="display: none;"> true</div>
+        <div id='available' style="display:none">no</div>
+      </div>
+
+
+      <div id="p32" class="player3 playerIcon" style="display:none">
+        <div id='current_position' style="display:none">0</div>
+        <div id='health' style="display: none;"> healthy </div>
+        <div id='score' style="display: none;"> 0</div>
+        <div id='turn' style="display: none;"> true</div>
+        <div id='available' style="display:none">no</div>
+      </div>
+ <!--
+      <div id="p33" class="player3 playerIcon" style="display:none">
+        <div id='current_position' style="display:none">0</div>
+        <div id='health' style="display: none;"> healthy </div>
+        <div id='score' style="display: none;"> 0</div>
+        <div id='turn' style="display: none;"> true</div>
+        <div id='available' style="display:none">no</div>
+      </div>
+-->
+  </article>
+
+<aside>
+  <div class="container score-container">
+
+    <button id="infoToggle" class="infoToggleButton">Show &amp; Hide</button>
+    <div id="infoDiv" class="infoDiv" style="display: none;">
+    <p> Pieces and Board </p>
+    <ul>
+    <li>The places have two sides: healthy and sick. <br/>
+    <img src="public/img/blue-piece-front.png"  class="myInfoIcon" />
+     <img class="myInfoIcon" src="public/img/blue-piece-back.png" /></li>
+    <li>The city tokens have two sides: healthy and pandemic.
+    <br/>
+    <img src="public/img/red-city-front.png" class="myInfoIcon" />
+       <img src="public/img/red-city-back.png"  class="myInfoIcon"/>
+    </li>
+    <li>Safety Icons:
+     <br/> Washing hands with soap <br/>
+     <img src="public/img/safety-icon-wash.png" class="myInfoIcon" />  <br/>
+    staying indoors <br/> 
+    <img src="public/img/safety-icon-home.png" class="myInfoIcon" /> <br/>
+
+    coughing and sneezing into your elbow 
+    <br/>
+    <img src="public/img/safety-icon-sneeze.png" class="myInfoIcon" /> 
+    </li>
+    <li>Hazard icons: <br/>
+    Touching your face 
+    <br/> 
+    <img src="public/img/hazard-icon-touching-face.png"  class="myInfoIcon"  /> 
+    <br/> shaking hands <br/> 
+    <img src="public/img/hazard-icon-shaking-hands.png" class="myInfoIcon"  /> 
+    <br/>
+    crowded places <br/> 
+     <img src="public/img/hazard-icon-crowds.png"  class="myInfoIcon"  /> 
+    </li>
+</ul>
+    <p>Game Rules </p>
+    <ul>
+    <li>Each player gets four pieces</li>
+    <li>Each time you want to put a new piece on the board you must roll a SIX. At the start the piece has its healthy face upwards.</li>
+    <li>If a healthy piece lands on a hazard icon, thumb up its sick face. If a healthy piece is in the same square as a sick piece, tum up its sick face. If a sick piece lands on a safety icon, turn up its healthy face.&nbsp;</li>
+    <li>Each time a sick piece lands on a hazard icon it is eliminated, setting off a pandemic in a new city. The pandemic spread sequence is: Orange City, Red City, and Purple City.</li>
+    <li>When pandemic begins in a city, turn up the city token&#39;s pandemic face.&nbsp;</li>
+    <li>Once there is pandemic in a city, all pieces which land on that city's squares a eliminated. A piece sitting on a city's square is eliminated when the pandemic spreads in that city.</li>
+    <li>The game ends when all four pieces of any player have reached the end or bee eliminated</li>
+    <li>All the player's pieces which have reached the end will be counted. A healthy piece will receive TWO points and a sick piece will receive ONE point. The player with the highest score wins.</li>
+    </ul>
+
+    <hr/>
+    <div dir="rtl">
+     <p>وٹیں اور کھیل</p>
+    <ul>
+    <li>گوٹ ک رورُخ ہیں:صحت اور بیماری ۔ <br/>
+    <img src="public/img/blue-piece-front.png"  class="myInfoIcon" />
+     <img class="myInfoIcon" src="public/img/blue-piece-back.png" /></li>
+    <li>صیل میں شامل شہر وں کے ٹو کن  کے دورُخ ہیں:صحت مند اور وبا کا شہر-
+    <br/>
+    <img src="public/img/red-city-front.png" class="myInfoIcon" />
+       <img src="public/img/red-city-back.png"  class="myInfoIcon"/>
+    </li>
+    <li>ما ظتی نشان:
+     <br/> صابن سے ہا تھ دھونا<br/>
+     <img src="public/img/safety-icon-wash.png" class="myInfoIcon" />  <br/>
+    گھر کے اندر رہنا <br/> 
+    <img src="public/img/safety-icon-home.png" class="myInfoIcon" /> <br/>
+
+  منھ کو کہنی سے ڈھا نک کر چھینکنا اور کھا نسنا 
+    <br/>
+    <img src="public/img/safety-icon-sneeze.png" class="myInfoIcon" /> 
+    </li>
+    <li>خطرے کے نشان: <br/>
+    اپنے چہرے کو ہاتھ لگ نا
+    <br/> 
+    <img src="public/img/hazard-icon-touching-face.png"  class="myInfoIcon"  /> 
+    <br/> ہاتھ ملا نا <br/> 
+    <img src="public/img/hazard-icon-shaking-hands.png" class="myInfoIcon"  /> 
+    <br/>
+    مجمع میں جان <br/> 
+     <img src="public/img/hazard-icon-crowds.png"  class="myInfoIcon"  /> 
+    </li>
+</ul>
+    <p>game rules </p>
+    <ul>
+    <li>
+    ہر کھلاڑی کو چار کھیل کے گوٹيں ملتے ہیں
+    </li>
+    <li>کُھلتے وقت ہر گوٹ کا صحت مند رُخ اوپر کی جانب ہوگ</li>
+    <li>صحت مند گوٹ خطرے کے نشان والے خانے میں آجاۓ تو اس کا بیمار رُخ اوپر کردیں۔
+    </li>
+    <li>اگر گوٹ حفاظتی نشان والے خانے میں آجاۓ تو اس کا صحت مند رُخ اوپر کردیں۔</li>
+    <li>صحت مند گوٹ اگر بیمار گوٹ کے ساتھ ایک خانے میں ہوں تو اس کا بیمار رُخ اوپر کردیں</li>
+    <li>ہر بار جب کوی بیمار گوٹ خطرے کے نشان والے خانے میں آے تو وہ کھیل سے نکل جاتی ہے اور ایک نۓ شہر میں وبا پھیلاتی ہے۔
+    </li>
+    <li>وبا نارنجی شہر سے شروع ہوتی ہے اور پھر لال شہر اور اس کے بعد کانسی شہر میں پھیلتی ہے۔</li>
+    <li>جب کسی شہر میں وبا پھیلے تو شہر کا ٹوکن اُلٹ کر اس کا وبا کا رُخ اوپر کردیں۔</li>
+    <li>کسی شہر میں وبا پھیل جانے پر اس شہر کے خانوں سے کوی بچاؤ نہیں اور جو گوٹ بھی اُن میں آے گی کھیل سے نکل جاے گی۔</li>
+    <li>کھیل اُس وقت ختم ہوگا جب کسی کھلاڑی کی چاروں گوٹیں ختم کے نشان پر پہنچ جائیں یا کھیل سے نکل چکی ہوں۔</li>
+    <li>کھیل ختم ہونے پر تمام کھلاڑیوں کی وہ گوٹیں گنی جایٔیں گی جو ختم کے نشان پر پہنچ چکی ہوں۔ صحت مند گوٹ کو دو نمبر اور بیمار گوٹ کو ایک نمبر ملے گا۔ وہ کھلاڑی جیتے گا جس کا اِسکور زیادہ ہوگا۔</li>
+    </ul>
+  </div>
+    </div> 
+
+    <script>
+      $('#infoToggle').click(function() {
+          $('#infoDiv').toggle('slow');
+      });
+    </script>
+
+    <div class="score-board">
+      <img class="game-board-img" src="public/img/game-board-logo-1.png" alt="game-logo">
+      <!--<div class="game-rules-div">
+        <img class="game-board" src="public/img/game-board-rules.png" alt="game-info">
+      </div>-->
+      
+      <div id="message" class="message-turn-status">Waiting for an opponent...</div>
+
+      <!-- <button id="inviteOther" onclick="run();">
+        Click here to reveal your Room Link
+      </button> -->
+      <div id="invitelink" style="display:none" onload="run()">
+      <span id="linkText" style="text-align:'left'"> 
+      
+       </span>
+      <button onclick="execCopy();"> COPY </button>
+      </div>
+      <div id="output" class="score-output">
+        <div class="l-wrapper">
+          <div class="l-grid">
+            <div class="l-grid__item">
+              <div class="c-card">
+                <div class="c-card__body">
+                  <ul class="c-list" id="list">
+                    <li class="c-list__item">
+                      <div class="c-list__grid">
+                        <div class="u-text--left u-text--small u-text--medium">#</div>
+                        <div class="u-text--left u-text--small u-text--medium">Players</div>
+                        <div class="u-text--right u-text--small u-text--medium">Score</div>
+                      </div>
+                    </li>
+                  <li id="p1" class="c-list__item" style="display: none;" >
+                    <div class="c-list__grid">
+                      <div class="c-flag c-place u-bg--transparent">1</div>
+                      <div class="c-media">
+                        <img class="c-avatar c-media__img" src="./public/img/blue-piece-front.png">
+                        <div class="c-media__content">
+                          <div id="player0name" class="c-media__title">Player 1</div>
+                          <!--<a class="c-media__link u-text--small" href="https://instagram.com/playerone" target="_blank">@playerone</a>-->
+                        </div>
+                      </div>
+                      <div class="u-text--right c-score">
+                        <div class="u-mt--8">
+                          <strong id="player0score">2</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li id="p2" class="c-list__item" style="display:none;">
+                    <div class="c-list__grid">
+                      <div class="c-flag c-place u-bg--transparent">2</div>
+                      <div class="c-media">
+                        <img class="c-avatar c-media__img" src="./public/img/pink-piece-front.png">
+                        <div class="c-media__content">
+                          <div id="player1name" class="c-media__title">Player 2</div>
+                          <!--<a class="c-media__link u-text--small" href="https://instagram.com/playertwo" target="_blank">@playertwo</a>-->
+                        </div>
+                      </div>
+                      <div class="u-text--right c-score">
+                        <div class="u-mt--8">
+                          <strong id="player1score">2</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li id="p3" class="c-list__item" style="display: none;">
+                    <div class="c-list__grid">
+                      <div class="c-flag c-place u-bg--transparent">3</div>
+                      <div class="c-media">
+                        <img class="c-avatar c-media__img" src="./public/img/green-piece-front.png">
+                        <div class="c-media__content">
+                          <div id="player2name" class="c-media__title">Player 3</div>
+                          <!--<a class="c-media__link u-text--small" href="https://instagram.com/playerthree" target="_blank">@playerthree</a>-->
+                        </div>
+                      </div>
+                      <div class="u-text--right c-score">
+                        <div class="u-mt--8">
+                          <strong id="player2score">2</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li id = "p4" class="c-list__item" style="display: none;">
+                    <div class="c-list__grid">
+                      <div class="c-flag c-place u-bg--transparent">4</div>
+                      <div class="c-media">
+                        <img class="c-avatar c-media__img" src="./public/img/yellow-piece-front.png">
+                        <div class="c-media__content">
+                          <div id="player3name" class="c-media__title">Player 4</div>
+                          <!--<a class="c-media__link u-text--small" href="https://instagram.com/playerfour" target="_blank">@playerfour</a>-->
+                        </div>
+                      </div>
+                      <div class="u-text--right c-score">
+                        <div class="u-mt--8">
+                          <strong id="player3score">2</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div id="graveyard" class="graveyard" style="display: none;">
+      <div class="dead-token-area">
+        <div class="graveyard-image"></div>
+      </div>
+    </div>
+
+    <div class="dice-area">
+    <div class="dice">
+    <ol class="die-list even-roll" data-roll="1" id="die-1">
+      <li class="die-item" data-side="1">
+        <span class="dot"></span>
+      </li>
+      <li class="die-item" data-side="2">
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </li>
+      <li class="die-item" data-side="3">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </li>
+      <li class="die-item" data-side="4">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </li>
+      <li class="die-item" data-side="5">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </li>
+      <li class="die-item" data-side="6">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </li>
+    </ol>
+    
+    </div>
+   <!-- button type="button" id="dice-button">Roll Dice</button> !-->
+    <button id="dice-button" style="display: none;">Roll Dice</button>
+  </div>
+
+   <!--<button id="startgame">Start Game</button> -->
+
+  </div>
+</aside>
+
+<audio id="healthsound" controls style="display: none;">
+  <source src="/public/audio/healthy.mp3" type="audio/mpeg">
+  healthy sound.
+</audio>
+
+<audio id="unhealthsound" controls style="display: none;">
+  <source src="/public/audio/unhealthy.mp3" type="audio/mpeg">
+  unhealthy sound.
+</audio>
+<audio id="pandamicsound" controls style="display: none;">
+  <source src="/public/audio/pandamic.mp3" type="audio/mpeg">
+  unhealthy sound.
+</audio>
+<audio id="deadsound" controls style="display: none;">
+  <source src="/public/audio/dead.mp3" type="audio/mpeg">
+  player dead sound.
+</audio>
+
+<audio id="dicesound" controls style="display: none;">
+  <source src="/public/audio/dice.mp3" type="audio/mpeg">
+  dice move.
+</audio>
+
+<audio id="completesound" controls style="display: none;">
+  <source src="/public/audio/complete.mp3" type="audio/mpeg">
+  complete dice.
+</audio>
+
+
+
+<audio id="winnersound" controls style="display: none;">
+  <source src="/public/audio/winner.mp3" type="audio/mpeg">
+  winner.
+</audio>
+<script type="text/javascript" src="public/js/main.js"></script>
+
+</body>
+</html>

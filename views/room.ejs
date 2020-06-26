@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Corona Crusher</title>
+		<link rel="stylesheet" href="public/css/style.css">
+        <!--<link rel="stylesheet" href="node_modules/skeleton-css/css/skeleton.css">-->
+		<!--<script defer src="http://localhost:3000/socket.io/socket.io.js"></script>-->
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+		<link rel="stylesheet" type="text/css" href="public/css/style.css"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<style>
+			.myRoomCode{
+			padding: 12px 20px;
+			margin: 8px 0;
+			display: inline-block;
+			border: 1px solid #ccc;
+			
+			}
+			
+			</style>
+
+	</head>
+	<body>
+           
+		<div class="container landing-background">
+			<div class="outer-wrapper">
+				<div class="inner-wrapper">
+					<div class="landing-menu">
+						<h1>Corona Crusher</h1>
+						<p style="text-align: center"><b>A board game for 2 to 4 people</b></p>
+						<p style="text-align: center"><b>Designed by Musharraf Ali Farooqi and Michelle Farooqi</b></p>
+						<p style="text-align: center"><b>Design copyright © 2020 Musharraf Ali Farooqi and Michelle Farooqi.</b></p>
+						<p style="text-align: center"><b>Text copyright © 2020 Musharraf Ali Farooqi</b></p>
+						<br></br>
+						<h3>How To Play </h3>
+						<ol>
+							<li><b></b> Create a new game by entering the username</li>
+							<li><b></b>  Use roomname  provided by the other player or directly open via link</li>
+						</ol>
+						<h4> Create a new Game </h4>
+						
+						<form action="/makepost" method="POST">
+							<select id="totalplayers" name="totalplayers">
+							<option value="1">2</option>
+							<option value="2">3</option>
+
+							<option value="3">4</option>
+							</select>
+							<button id="newroom" type="submit">New Room</button>
+						</form>
+						<p>*select max player size 2,3 or 4 </p>
+						
+
+					
+						<!-- <input type="text" name="name" id="nameJoin" placeholder="Enter your name" required>
+						<input type="text" name="room" id="room" placeholder="Enter Game ID" required>
+						<button id="join">Join Game</button> -->
+						</form>
+
+						<div id="room-container" class="temporaryClass">
+							
+						</div>
+					</div>
+					<div class="gameBoard" style="display: none;">
+						<h2 id="userHello"></h2>
+					
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--<script src="/socket.io/socket.io.js"></script>-->
+		<!--<script src="main.js"></script>-->
+		<script type="text/javascript" src="public/js/room.js"></script>
+
+	
+	</body>
+</html>

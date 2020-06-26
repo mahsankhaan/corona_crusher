@@ -1,0 +1,20 @@
+{
+  "name": "coronacrusher",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js",
+    "start": "node app.js"
+  },
+  "author": "developeradvocacy",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^3.0.2",
+    "express": "^4.15.2",
+    "skeleton-css": "^2.0.4",
+    "socket.io": "^2.3.0",
+    "sockets": "^0.4.2"
+  }
+}
