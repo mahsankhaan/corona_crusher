@@ -1,7 +1,5 @@
 applications:
     - name: coronacrushertesta
       path: .
-      memory: 256M
       instances: 1
-      disk_quota: 512M
       buildpack: sdk-for-nodejs
