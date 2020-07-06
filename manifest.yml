@@ -1,5 +1,9 @@
 applications:
-    - name: coronacrushertesta
-      path: .
+    - path: .
+      memory: 256M
       instances: 1
+      domain: mybluemix.net
+      name: coronacrushertesta
+      host: coronacrushertesta
+      disk_quota: 1024M
       buildpack: sdk-for-nodejs
