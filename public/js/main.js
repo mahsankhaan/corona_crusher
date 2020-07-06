@@ -173,7 +173,7 @@ span.onclick = function() {
 
 
       console.log("game start");
-      document.getElementById("inviteOther").style.display="none";
+      //document.getElementById("inviteOther").style.display="none";
       document.getElementById("invitelink").style.display="none";
 
       socket.emit("all_players_join", {
@@ -276,9 +276,11 @@ else
   // Bind on event for opponent leaving the game
   socket.on("game_end", function (data) {
     
-    alert("Game End. player disconnected")
+    show_score(player_id);
 
-    window.location.href = "https://coronacrushertest.mybluemix.net/";
+    //alert("Game End. player disconnected")
+
+   // window.location.href = "https://coronacrushertest.mybluemix.net/";
   });
 
   function toggleClasses(die) {

@@ -1439,7 +1439,7 @@
 
   /* landing page styling starts */
   .landing-background{
-    background: url("/public/img/blur-background.png");
+    background: url("/public/img/blur-background-min.png");
     background-repeat: no-repeat;
     background-size: cover;
     padding: 0;
