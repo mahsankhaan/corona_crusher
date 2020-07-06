@@ -1,7 +1,7 @@
 applications:
-    - path: .
-      memory: 128M
+    - name: coronacrushertesta
+      path: .
+      memory: 256M
       instances: 1
-      name: coronacrushertesta
-      host: coronacrushertesta
+      disk_quota: 512M
       buildpack: sdk-for-nodejs
