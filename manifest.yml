@@ -1,7 +1,6 @@
 applications:
       memory: 128M
       instances: 1
-      domain: mybluemix.net
       name: coronacrushertesta
       host: coronacrushertesta
       buildpack: sdk-for-nodejs
