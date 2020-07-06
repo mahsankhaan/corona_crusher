@@ -1,5 +1,6 @@
 applications:
-    - memory: 128M
+    - path: .
+      memory: 128M
       instances: 1
       name: coronacrushertesta
       host: coronacrushertesta
